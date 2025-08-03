@@ -1,5 +1,6 @@
 CC = gcc
 CFLAGS = -MMD -MP -lm
+OFLAGS = -Iinclude
 BLDDIR = build
 SRCDIR = src
 SRCS = $(wildcard $(SRCDIR)/*.c)
@@ -11,10 +12,10 @@ CALCULATOR = $(BLDDIR)/calculator
 
 all: $(CALCULATOR) 
 
-$(BLDDIR)/%.o:$(SRCDIR)/%.c
-	$(CC) -c $< -o $@
+$(BLDDIR)/%.o:$(SRCDIR)/%.c | $(BLDDIR)
+	$(CC) $(OFLAGS) -c $< -o $@
 
-$(CALCULATOR) : $(OBJS) | $(BLDDIR)
+$(CALCULATOR) : $(OBJS) 
 	$(CC) $^ -o $@ $(CFLAGS) 
 
 
