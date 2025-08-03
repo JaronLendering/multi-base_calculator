@@ -1,4 +1,5 @@
 CC = gcc
+CFLAGS = -MMD -MP
 SRCS = $(wildcard src/*.c)
 BLDFLDR = build/
 CALCULATOR = $(BLDFLDR)calculator
@@ -9,4 +10,6 @@ all: $(CALCULATOR)
 
 $(CALCULATOR) : $(SRCS) 
 	mkdir -p build
-	$(CC) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
+
+-include $(CALCULATOR).d
