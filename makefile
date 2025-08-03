@@ -10,6 +10,6 @@ all: $(CALCULATOR)
 
 $(CALCULATOR) : $(SRCS) 
 	mkdir -p build
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $(SRCS) -o $@
 
 -include $(CALCULATOR).d
