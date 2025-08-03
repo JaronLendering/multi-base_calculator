@@ -8,8 +8,9 @@
 
 void intToBinary(unsigned int l, char* bin, unsigned int integer){
     int i = l;
+    bin[i--] = '\0'; 
     while(integer > 0 && i>=0){
-        bin[i--] = (char) (integer%2);
+        bin[i--] = (char) (integer%2 + '0');
         integer /= 2;
     }
 }

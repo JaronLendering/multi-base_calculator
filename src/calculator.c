@@ -6,6 +6,7 @@
 
 void printNewBase(int number, int base){
     char* buffer = intToBase(number, base);
+
     printf("%d in base %d is %s\n", number, base, buffer );
     free(buffer);
 
