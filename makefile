@@ -1,15 +1,24 @@
 CC = gcc
-CFLAGS = -MMD -MP
-SRCS = $(wildcard src/*.c)
-BLDFLDR = build/
-CALCULATOR = $(BLDFLDR)calculator
+CFLAGS = -MMD -MP -lm
+BLDDIR = build
+SRCDIR = src
+SRCS = $(wildcard $(SRCDIR)/*.c)
+OBJS = $(SRCS:$(SRCDIR)/%.c=$(BLDDIR)/%.o)
+
+CALCULATOR = $(BLDDIR)/calculator
 
 .PHONY: all
 
 all: $(CALCULATOR) 
 
-$(CALCULATOR) : $(SRCS) 
-	mkdir -p build
-	$(CC) $(CFLAGS) $(SRCS) -o $@
+$(BLDDIR)/%.o:$(SRCDIR)/%.c
+	$(CC) -c $< -o $@
+
+$(CALCULATOR) : $(OBJS) | $(BLDDIR)
+	$(CC) $^ -o $@ $(CFLAGS) 
+
+
+$(BLDDIR):
+	mkdir -p $(BLDDIR)
 
 -include $(CALCULATOR).d

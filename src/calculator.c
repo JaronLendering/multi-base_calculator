@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #include "exceptions.h"
-#include "conversion.h"
+#include "conversions.h"
 
 void printNewBase(int number, int base){
     char* buffer = intToBase(number, base);
