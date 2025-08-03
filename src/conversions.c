@@ -9,7 +9,7 @@
 void intToBinary(unsigned int l, char* bin, unsigned int integer){
     int i = l;
     while(integer > 0 && i>=0){
-        bin[i--] = '0' + (char) (integer%2);
+        bin[i--] = (char) (integer%2);
         integer /= 2;
     }
 }
