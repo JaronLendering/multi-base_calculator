@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
+#include <limits.h>
 
 #include "exceptions.h"
 
@@ -27,10 +29,36 @@ char* intToBase(unsigned int integer, int base){
         case 16:
             snprintf(buffer, baseCount,"%x", integer);
             break;
+        case 10:
+            snprintf(buffer,baseCount,"%d", integer);
+            break;
         default:
-            throwException("Choose a base of 2 or 16");
+            throwException("Choose a base of 2, 10 or 16");
             break;
     }
     return buffer;
 }
+
+int baseToInt(char* number, int base){
+    char *eptr;
+    long result = strtol(number, &eptr, base);
+
+    /* If the result is 0, test for an error */
+    if (result == 0)
+    {
+        /* If a conversion error occurred, display a message and exit */
+        if (errno == EINVAL)
+        {
+            throwException("Conversion error occurred: %d\n", errno);
+        }
+    }
+
+    /* If the result is equal to LONG_MIN or LONG_MAX, test for a range error */
+    if (result < INT_MIN || result > INT_MAX)
+    {
+            throwException("The value provided was out of range\n");
+    }
+    return (int) result;
+}
+
 
