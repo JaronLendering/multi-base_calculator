@@ -56,6 +56,12 @@ int parse_number(Parser* p){
             case '7':
             case '8':
             case '9':
+            case 'a':
+            case 'b':
+            case 'c':
+            case 'd':
+            case 'e':
+            case 'f':
                 p->pos++;
 
                 if(is_base){
@@ -81,7 +87,7 @@ int parse_number(Parser* p){
                 p->pos++;
                 if(is_base){
                     is_base = false;
-                    base_string[base_size-1] = '\0';
+                    base_string[base_i] = '\0';
                     base = baseToInt(base_string,10);
                     break;
                 }
@@ -95,10 +101,14 @@ int parse_number(Parser* p){
                     strcpy(total,base_string);
                     strcat(total,number);
                     free(number);
+                    number_i += number_i + base_i;
                     number = total;  
                     base = 10;
                 }
-                number[size-1] = '\0';
+                size_t l = strlen(number);
+                number[number_i] = '\0';
+                printf("number parsed: %s with length: %ld \n", number,l);
+
                 int n = baseToInt(number,base);
                 free(number);
                 return n;
@@ -130,41 +140,51 @@ int calculate(char* calculation){
             case '7':
             case '8':
             case '9':
+            case 'a':
+            case 'b':
+            case 'c':
+            case 'd':
+            case 'e':
+            case 'f':
+                was_operator = false;
                 if(is_pre){
                     prenum = parse_number(&parser);
                     is_pre = false;
                     break;
                 }
                 prenum = op(prenum,parse_number(&parser));
-                was_operator = false;
                 break;
             case '*':
 
                 if(was_operator){
-                    throwException("Parsing error: A number has to be infront and before an operator\n");
+                    throwException("Parsing error: A number has to be infront an operator\n");
                 }
-                if(parser.pos < length-2 && parser.input[parser.pos+1] == '*'){
+                if(parser.pos < length-1 && parser.input[parser.pos+1] == '*'){
                     op = get_operator('p');
                     parser.pos += 2;
                 }
                 else{
-                    op = get_operator('p');
+                        op = get_operator('*');
+                        parser.pos++;
                 }
                 was_operator = true;
                 break;
-
             case '/':
             case '+':
             case '-':
                 if(was_operator){
-                    throwException("Parsing error: A number has to be infront and before an operator\n");
+                    throwException("Parsing error: A number has to be infront an operator\n");
                 }
                 op = get_operator(c);
                 parser.pos++;
                 was_operator = true;
+                break;
             default:
                 throwException("Parsing error: Use only operators or numbers\n");
         }   
+    }
+    if(was_operator){
+        throwException("Parsing error: A number has to be after an operator\n");
     }
     return prenum;
 

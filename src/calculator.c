@@ -18,7 +18,7 @@ int main(int argc, char* argv[]){
     if(argc < 3){
         throwException("You miss %d argument(s)!\n", 3 - argc);
     }
-
+    
     int result_base = baseToInt(argv[1],10);
     char* calculation = argv[2];
     int number = calculate(argv[2]);
