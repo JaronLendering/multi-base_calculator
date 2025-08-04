@@ -38,7 +38,6 @@ int parse_number(Parser* p){
     char* number = malloc(size);
     char c;
     int number_i = 0;
-
     int base_size = 3;
     char* base_string = malloc(base_size);
     int base;
@@ -118,7 +117,7 @@ int calculate(char* calculation){
     Operator op;
     bool is_pre = true;
     bool was_operator = true;
-    while(parser.pos < length-1){
+    while(parser.pos < length){
         c = parser.input[parser.pos];
         switch(c){
             case '0':
