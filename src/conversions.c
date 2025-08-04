@@ -44,7 +44,6 @@ int baseToInt(char* number, int base){
     long result = strtol(number, &eptr, base);
 
     if(strlen(eptr) > 0){
-        printf("number: %s\n", number);
         throwException("Conversion error: invalid number %c\n",eptr[0]);
 
     }

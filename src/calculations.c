@@ -107,7 +107,6 @@ int parse_number(Parser* p){
                 }
                 size_t l = strlen(number);
                 number[number_i] = '\0';
-                printf("number parsed: %s with length: %ld \n", number,l);
 
                 int n = baseToInt(number,base);
                 free(number);
