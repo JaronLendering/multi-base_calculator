@@ -3,12 +3,11 @@
 
 #include "exceptions.h"
 #include "conversions.h"
+#include "calculations.h"
 
-void printBase(int number, int base){
-
+void printCalcInBase(char* calc, int number, int base){
     char* buffer = intToBase(number, base);
-
-    printf("%d in base %d is %s\n", number, base, buffer );
+    printf("%s in base %d is %s\n", calc, base, buffer );
     free(buffer);
 
 }
@@ -17,12 +16,13 @@ void printBase(int number, int base){
 int main(int argc, char* argv[]){
     
     if(argc < 3){
-        throwException("You miss %d argument(s)!\n", 4 - argc);
+        throwException("You miss %d argument(s)!\n", 3 - argc);
     }
 
     int result_base = baseToInt(argv[1],10);
-    int number = baseToInt(argv[2],result_base);
-    printBase(number,10);
+    char* calculation = argv[2];
+    int number = calculate(argv[2]);
+    printCalcInBase(calculation,number,result_base);
 }
 
 
